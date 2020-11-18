@@ -17,6 +17,44 @@ up = False
 gorund_size = 75
 ground_rect = 0, HEIGHT - ground_size, WIDTH, HEIGHT
 
+
+class Player:
+  player_pos = 50
+  def __init__(self, color=(0, 0, 0)):
+    self.color = color
+    self.width = 30
+    self.height = 100
+    self.x = player_pos
+    self.y = HEIGHT - ground_size - self.height
+    self.speed = 0
+    self.jump_power = 15
+    self._gravity = 1
+  
+  @property
+  def pos(self):
+    return self.x, self.y
+  
+  @pos.setter
+  def pos(self, p):
+    self.x, self.y = p
+  
+  def jump(self):
+    self.speed = self.jump_power
+  
+  def gravity(self):
+    self.speed -= self._gravity
+  
+  def react(self):
+    self.y -= self.speed
+    if self.y < HEIGHT - ground_size - self.height:
+      self.y = HEIGHT - ground_size - self.height
+      self.speed = 0
+  
+  def draw(self, surf):
+    rect = self.x, self.y, self.width, self.height
+    surf.blit(self.color, rect)
+
+
 player = Player()
 
 clock = pygame.time.Clock()
